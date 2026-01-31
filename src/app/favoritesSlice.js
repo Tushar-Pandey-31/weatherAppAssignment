@@ -1,0 +1,3 @@
+{
+  favorites: ["Delhi", "London"]
+}
