@@ -3,10 +3,13 @@ import weatherReducer from "./weatherSlice";
 import favoritesReducer from "./favoritesSlice";
 import settingsReducer from "./settingsSlice";
 
-export const store = configureStore({
+
+const store = configureStore({
   reducer: {
     weather: weatherReducer,
     favorites: favoritesReducer,
     settings: settingsReducer,
   },
 });
+
+export default store;
