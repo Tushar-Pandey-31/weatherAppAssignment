@@ -26,10 +26,12 @@ export default function Dashboard() {
   }, [dispatch, unit, cities]);
 
   useEffect(() => {
-    DEFAULT_CITIES.forEach((city) => {
+    const citiesToFetch = [...new Set([...DEFAULT_CITIES, ...favorites])];
+
+    citiesToFetch.forEach((city) => {
       dispatch(getWeatherByCity({ city, units: unit }));
     });
-  }, [dispatch, unit]);
+} , [dispatch, unit, favorites.length]);
 
   return (
     <div className="dashboard-container">
