@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 const BASE_URL = "https://api.openweathermap.org/data/2.5";
-
+const GEO_URL = "https://api.openweathermap.org/geo/1.0"; 
 // Current weather
 export const getCurrentWeather = async (city, unit = "metric") => {
   if (!city) throw new Error("City is required");
@@ -29,5 +29,17 @@ export const getForecast = async (city, unit = "metric") => {
     },
   });
 
+  return response.data;
+};
+
+export const searchCities = async (query) => {
+  if (!query) return [];
+  const response = await axios.get(`${GEO_URL}/direct`, {
+    params: {
+      q: query,
+      limit: 5, // Limit to 5 suggestions
+      appid: API_KEY,
+    },
+  });
   return response.data;
 };

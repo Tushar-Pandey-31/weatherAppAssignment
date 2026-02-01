@@ -7,18 +7,11 @@ import UnitToggle from "../components/UnitToggle";
 
 const DEFAULT_CITIES = ["Delhi", "Mumbai", "London"];
 
-
 export default function Dashboard() {
   const dispatch = useDispatch();
   const { cities, status } = useSelector((state) => state.weather);
   const favorites = useSelector((state) => state.favorites.cities);
   const unit = useSelector((state) => state.settings.unit);
-
-
-  const sortedCities = [
-  ...favorites,
-  ...Object.keys(cities).filter((c) => !favorites.includes(c)),
-  ];
 
   useEffect(() => {
     DEFAULT_CITIES.forEach((city) => {
@@ -26,19 +19,20 @@ export default function Dashboard() {
     });
   }, [dispatch, unit]);
 
-  console.log("Cities state:", cities);
-
-
   return (
-    <div>
-      <h1>Weather Dashboard</h1>
+    <div className="dashboard-container">
+      <div className="dashboard-header">
+        <h1 className="dashboard-title">Weather Dashboard</h1>
+        
+        <div className="controls-section">
+          <SearchBar />
+          <UnitToggle />
+        </div>
+      </div>
 
-      <SearchBar />
-      <UnitToggle />
+      {status === "loading" && <p>Loading data...</p>}
 
-      {status === "loading" && <p>Loading...</p>}
-
-      <div style={{ display: "flex", gap: "16px" }}>
+      <div className="cities-grid">
         {Object.keys(cities).map((city) => (
           <CityCard key={city} city={city} data={cities[city]} />
         ))}

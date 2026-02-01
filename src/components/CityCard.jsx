@@ -1,43 +1,43 @@
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
 import { toggleFavorite } from "../app/favoritesSlice";
-
 
 export default function CityCard({ city, data }) {
   const dispatch = useDispatch();
   const favorites = useSelector((state) => state.favorites.cities);
   const isFavorite = favorites.includes(city);
+  
   if (!data) return null;
 
   return (
-    <Link to={`/city/${city}`} style={{ textDecoration: "none" }}>
-        <button
-            onClick={(e) => {
-            e.preventDefault();
-            dispatch(toggleFavorite(city));
-        }}
-        >
-    {isFavorite ? "⭐" : "☆"}
-    </button>
+    <div className="city-card-wrapper" style={{ position: 'relative' }}>
+        {/* We move the button outside the Link or handle click propogation carefully. 
+            However, putting a button inside an anchor (Link) is invalid HTML. 
+            Better to wrap the card content in the Link, but keep the button separate 
+            visually via absolute positioning, or use e.preventDefault (which you did).
+        */}
+        
+        <Link to={`/city/${city}`} className="city-card">
+            <button
+                className="fav-btn"
+                onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation(); // Good practice to stop bubbling
+                    dispatch(toggleFavorite(city));
+                }}
+            >
+                {isFavorite ? "⭐" : "☆"}
+            </button>
 
-      <div style={{
-        border: "1px solid #ddd",
-        padding: "16px",
-        borderRadius: "8px",
-        width: "180px"
-      }}>
-        <h3>{city}</h3>
-        <p>{Math.round(data.main.temp)}°</p>
-        <p>{data.weather[0].main}</p>
-        <img
-          src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
-          alt="weather"
-        />
-      </div>
-    </Link>
+            <h3 className="city-name">{city}</h3>
+            <img
+                className="weather-icon"
+                src={`https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`}
+                alt={data.weather[0].main}
+            />
+            <p className="city-temp">{Math.round(data.main.temp)}°</p>
+            <p className="city-weather">{data.weather[0].main}</p>
+        </Link>
+    </div>
   );
 }
-
-
-

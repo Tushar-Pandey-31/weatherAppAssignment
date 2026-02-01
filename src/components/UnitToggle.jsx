@@ -6,8 +6,9 @@ export default function UnitToggle() {
   const unit = useSelector((state) => state.settings.unit);
 
   return (
-    <button onClick={() => dispatch(toggleUnit())}>
-      {unit === "metric" ? "°C → °F" : "°F → °C"}
+    <button className="unit-toggle-btn" onClick={() => dispatch(toggleUnit())}>
+      {unit === "metric" ? "°C" : "°F"} 
+      {/* Shortened the text to be cleaner */}
     </button>
   );
 }
