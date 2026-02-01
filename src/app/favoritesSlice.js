@@ -1,12 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-const initialState = {
-  cities: JSON.parse(localStorage.getItem("favorites")) || [],
-};
+import { loadFavorites, saveFavorites } from "../utils/localStorage"; // adjust path as needed
 
 const favoritesSlice = createSlice({
   name: "favorites",
-  initialState,
+  initialState: {
+    cities: loadFavorites(),
+  },
   reducers: {
     toggleFavorite: (state, action) => {
       const city = action.payload;
@@ -15,7 +14,7 @@ const favoritesSlice = createSlice({
       } else {
         state.cities.push(city);
       }
-      localStorage.setItem("favorites", JSON.stringify(state.cities));
+      saveFavorites(state.cities);
     },
   },
 });

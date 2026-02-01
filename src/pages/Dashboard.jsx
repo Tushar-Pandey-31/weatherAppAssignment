@@ -14,6 +14,18 @@ export default function Dashboard() {
   const unit = useSelector((state) => state.settings.unit);
 
   useEffect(() => {
+    const refreshData = () => {
+      // Loop through currently displayed cities and refresh them
+      Object.keys(cities).forEach((city) => {
+        dispatch(getWeatherByCity({ city, units: unit }));
+      });
+    };
+
+    const interval = setInterval(refreshData, 60000); // Trigger every 60s
+    return () => clearInterval(interval); 
+  }, [dispatch, unit, cities]);
+
+  useEffect(() => {
     DEFAULT_CITIES.forEach((city) => {
       dispatch(getWeatherByCity({ city, units: unit }));
     });
