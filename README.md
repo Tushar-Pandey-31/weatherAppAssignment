@@ -2,6 +2,9 @@
 
 A modern, high-performance Weather Dashboard built with **React**, **Redux Toolkit**, and **Recharts**. This application provides real-time weather updates, interactive forecast trends, and intelligent data management to ensure a seamless user experience.
 
+## live link
+https://weather-app-assignment-alpha.vercel.app/
+
 ## 🚀 Key Features
 
 * **Real-time Weather & Search**: Instant weather updates for any city globally using the OpenWeatherMap API.
